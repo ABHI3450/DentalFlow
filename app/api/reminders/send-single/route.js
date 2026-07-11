@@ -1,0 +1,47 @@
+import { auth } from '@clerk/nextjs/server';
+import { sendSMS, formatPhoneNumber } from '@/lib/twilio';
+import { sendEmail, getReminderEmailTemplate } from '@/lib/resend';
+import { generateReminderMessage } from '@/lib/gemini';
+import { supabase } from '@/lib/supabase';
+
+export async function POST(req) {
+  const { userId } = await auth();
+  if (!userId) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+
+  try {
+    const { appointmentId, patientName, patientPhone, patientEmail, clinicName, datetime } = await req.json();
+
+    // Generate AI reminder message
+    const message = await generateReminderMessage(clinicName, patientName, datetime);
+
+    let smsSent = false;
+    let emailSent = false;
+
+    // Send SMS
+    if (patientPhone) {
+      const formatted = formatPhoneNumber(patientPhone);
+      const result = await sendSMS(formatted, message);
+      smsSent = result.success;
+    }
+
+    // Send Email
+    if (patientEmail) {
+      const { html, text } = getReminderEmailTemplate(clinicName, patientName, datetime);
+      const result = await sendEmail(patientEmail, `Appointment Reminder — ${clinicName}`, html, text);
+      emailSent = result.success;
+    }
+
+    // Mark reminder as sent
+    if (appointmentId && (smsSent || emailSent)) {
+      await supabase
+        .from('appointments')
+        .update({ reminder_sent: true })
+        .eq('id', appointmentId);
+    }
+
+    return Response.json({ success: smsSent || emailSent, smsSent, emailSent, message });
+  } catch (error) {
+    console.error('Send reminder error:', error);
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+}

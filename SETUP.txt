@@ -1,0 +1,66 @@
+🦷 DENTALFLOW "INTELLY-STYLE" UI - SETUP (2 MINUTES)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT'S IN THIS FOLDER:
+
+app/
+  layout.jsx          → Root layout (black bg)
+  page.jsx             → Redirects to /dashboard
+  globals.css          → Base styles
+  dashboard/
+    page.jsx            → Main dashboard page
+
+components/
+  Sidebar.jsx           → Dark rounded sidebar with icons
+  TopBar.jsx            → Search bar + icon buttons
+  StatCardsGrid.jsx     → 4 pastel stat cards (yellow/pink/green/blue)
+  PatientPanel.jsx      → Patient list + visit details (clickable)
+  CalendarPanel.jsx     → Calendar + today's timeline + Virtual Dentist widget
+
+tailwind.config.js
+postcss.config.js
+
+═══════════════════════════════════════════════════════════════════════════════
+
+HOW TO USE (in your EXISTING Next.js project):
+
+1. Copy the "app" folder contents into your project's app/ folder
+2. Copy the "components" folder contents into your project's components/ folder
+3. Install lucide-react:
+   npm install lucide-react
+
+4. Restart:
+   rm -rf .next && npm run dev
+
+5. Visit: http://localhost:3000 → redirects to /dashboard
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FEATURES:
+
+✓ Dark rounded sidebar with icon navigation
+✓ Search bar with filter pills
+✓ 4 pastel stat cards with mini charts
+✓ Clickable patient list (click a patient to see it highlighted)
+✓ Visit details panel showing symptoms & prescription
+✓ Calendar with month navigation + today highlighted
+✓ Timeline of today's appointments
+✓ Virtual Dentist AI widget with query counter
+✓ Fully responsive (calendar hides on smaller screens)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CUSTOMIZE:
+
+- Patient data: edit the `patients` array in PatientPanel.jsx
+- Timeline events: edit the `timeline` array in CalendarPanel.jsx
+- Stat numbers: edit StatCardsGrid.jsx directly
+- Colors: search for bg-[#f4d35e] etc. and swap hex codes
+- Connect real data: replace arrays with calls to your lib/supabase.js functions
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DONE! 🎉
+
+═══════════════════════════════════════════════════════════════════════════════
