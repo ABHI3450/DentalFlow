@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
-import { razorpay } from '@/lib/razorpay';
+import { getRazorpayInstance } from '@/lib/razorpay';
 
 const PLANS = {
   growth: { amount: 99, currency: 'USD' },
@@ -35,6 +35,11 @@ export async function POST(req) {
 
     const planDetails = PLANS[plan];
     const amountInCents = planDetails.amount * 100; // Razorpay expects amount in smallest currency unit (cents/paise)
+
+    const razorpay = getRazorpayInstance();
+    if (!razorpay) {
+      return NextResponse.json({ error: 'Payment gateway configuration error' }, { status: 500 });
+    }
 
     // Create Razorpay Order
     const options = {
