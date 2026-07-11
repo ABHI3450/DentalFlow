@@ -14,20 +14,35 @@ export default function OnboardingPage() {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
+    if (!user) {
+      router.push('/signin');
+      return;
+    }
     const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) return;
+    if (!email) {
+      setChecking(false);
+      return;
+    }
 
     (async () => {
-      const { data } = await supabase
-        .from('clinics')
-        .select('id')
-        .eq('owner_email', email)
-        .single();
-      if (data) router.push('/dashboard');
-      else setChecking(false);
+      try {
+        const { data } = await supabase
+          .from('clinics')
+          .select('id')
+          .eq('owner_email', email)
+          .single();
+        if (data) {
+          router.push('/dashboard');
+        } else {
+          setChecking(false);
+        }
+      } catch (err) {
+        console.error('Onboarding check error:', err);
+        setChecking(false);
+      }
     })();
-  }, [isLoaded, user]);
+  }, [isLoaded, user, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -48,36 +48,48 @@ export default function SettingsPage() {
     if (!isLoaded) return;
     if (!user) { router.push('/signin'); return; }
 
-    async function fetchData() {
-      const email = user.primaryEmailAddress?.emailAddress;
-      if (!email) { router.push('/onboarding'); return; }
-
-      const { data: clinic, error: clinicError } = await supabase
-        .from('clinics')
-        .select('id, name')
-        .eq('owner_email', email)
-        .single();
-
-      if (clinicError || !clinic) { router.push('/onboarding'); return; }
-
-      setClinicId(clinic.id);
-      setClinicName(clinic.name || '');
-
-      // Fetch settings (may not exist yet)
-      const { data: settings } = await supabase
-        .from('settings')
-        .select('sms_enabled, email_enabled, reminder_hours_before')
-        .eq('clinic_id', clinic.id)
-        .single();
-
-      if (settings) {
-        setSmsEnabled(settings.sms_enabled ?? true);
-        setEmailEnabled(settings.email_enabled ?? true);
-        setReminderHours(settings.reminder_hours_before ?? 24);
-      }
-      // else: keep defaults (sms=true, email=true, hours=24)
-
+    const email = user.primaryEmailAddress?.emailAddress;
+    if (!email) {
+      router.push('/onboarding');
       setLoading(false);
+      return;
+    }
+
+    async function fetchData() {
+      try {
+        setLoading(true);
+
+        const { data: clinic, error: clinicError } = await supabase
+          .from('clinics')
+          .select('id, name')
+          .eq('owner_email', email)
+          .single();
+
+        if (clinicError || !clinic) {
+          router.push('/onboarding');
+          return;
+        }
+
+        setClinicId(clinic.id);
+        setClinicName(clinic.name || '');
+
+        // Fetch settings (may not exist yet)
+        const { data: settings } = await supabase
+          .from('settings')
+          .select('sms_enabled, email_enabled, reminder_hours_before')
+          .eq('clinic_id', clinic.id)
+          .single();
+
+        if (settings) {
+          setSmsEnabled(settings.sms_enabled ?? true);
+          setEmailEnabled(settings.email_enabled ?? true);
+          setReminderHours(settings.reminder_hours_before ?? 24);
+        }
+      } catch (err) {
+        console.error('Error fetching settings:', err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchData();

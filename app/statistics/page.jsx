@@ -31,22 +31,26 @@ export default function StatisticsPage() {
     }
 
     const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) return;
+    if (!email) {
+      setLoading(false);
+      return;
+    }
 
     async function fetchData() {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      // 1. Get clinic
-      const { data: clinicData, error: clinicError } = await supabase
-        .from('clinics')
-        .select('*')
-        .eq('owner_email', email)
-        .single();
+        // 1. Get clinic
+        const { data: clinicData, error: clinicError } = await supabase
+          .from('clinics')
+          .select('*')
+          .eq('owner_email', email)
+          .single();
 
-      if (clinicError || !clinicData) {
-        router.push('/onboarding');
-        return;
-      }
+        if (clinicError || !clinicData) {
+          router.push('/onboarding');
+          return;
+        }
 
       setClinic(clinicData);
 
@@ -107,8 +111,11 @@ export default function StatisticsPage() {
         .limit(5);
 
       setTopNoShowPatients((patients || []).filter((p) => p.past_no_shows > 0));
-
-      setLoading(false);
+      } catch (err) {
+        console.error('Error fetching statistics:', err);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchData();

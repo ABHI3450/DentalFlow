@@ -52,17 +52,30 @@ export default function ChatsPage() {
     if (!user) { router.push('/signin'); return; }
 
     async function fetchClinic() {
-      const email = user.primaryEmailAddress?.emailAddress;
-      if (!email) { router.push('/onboarding'); return; }
+      try {
+        const email = user.primaryEmailAddress?.emailAddress;
+        if (!email) { 
+          router.push('/onboarding'); 
+          setLoading(false);
+          return; 
+        }
 
-      const { data, error } = await supabase
-        .from('clinics')
-        .select('id')
-        .eq('owner_email', email)
-        .single();
+        const { data, error } = await supabase
+          .from('clinics')
+          .select('id')
+          .eq('owner_email', email)
+          .single();
 
-      if (error || !data) { router.push('/onboarding'); return; }
-      setClinicId(data.id);
+        if (error || !data) { 
+          router.push('/onboarding'); 
+          setLoading(false);
+          return; 
+        }
+        setClinicId(data.id);
+      } catch (err) {
+        console.error('Error fetching clinic in chats:', err);
+        setLoading(false);
+      }
     }
 
     fetchClinic();

@@ -26,67 +26,74 @@ export default function DashboardPage() {
     }
 
     const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) return;
+    if (!email) {
+      setLoading(false);
+      return;
+    }
 
     async function fetchData() {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      // 1. Get clinic for this owner
-      const { data: clinicData, error: clinicError } = await supabase
-        .from('clinics')
-        .select('*')
-        .eq('owner_email', email)
-        .single();
+        // 1. Get clinic for this owner
+        const { data: clinicData, error: clinicError } = await supabase
+          .from('clinics')
+          .select('*')
+          .eq('owner_email', email)
+          .single();
 
-      if (clinicError || !clinicData) {
-        router.push('/onboarding');
-        return;
+        if (clinicError || !clinicData) {
+          router.push('/onboarding');
+          return;
+        }
+
+        setClinic(clinicData);
+
+        // 2. Today's date range
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+        const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).toISOString();
+
+        // 3. Today's appointments
+        const { data: todayAppts } = await supabase
+          .from('appointments')
+          .select('id, datetime, status, no_show_risk, reminder_sent, patients:patient_id (id, name, phone)')
+          .eq('clinic_id', clinicData.id)
+          .gte('datetime', todayStart)
+          .lte('datetime', todayEnd)
+          .order('datetime');
+
+        const appts = todayAppts || [];
+        setTodayAppointments(appts);
+        setTodayCount(appts.length);
+        setHighRiskToday(appts.filter((a) => a.no_show_risk === 'high').length);
+
+        // 4. Total patients count
+        const { count: patientCount } = await supabase
+          .from('patients')
+          .select('id', { count: 'exact', head: true })
+          .eq('clinic_id', clinicData.id);
+
+        setActivePatients(patientCount || 0);
+
+        // 5. All appointments for confirmation rate
+        const { data: allAppts } = await supabase
+          .from('appointments')
+          .select('id, status')
+          .eq('clinic_id', clinicData.id);
+
+        const all = allAppts || [];
+        if (all.length > 0) {
+          const confirmed = all.filter((a) => a.status === 'confirmed' || a.status === 'completed').length;
+          setConfirmRate(Math.round((confirmed / all.length) * 100));
+        } else {
+          setConfirmRate(0);
+        }
+      } catch (error) {
+        console.error('Error in dashboard loading:', error);
+      } finally {
+        setLoading(false);
       }
-
-      setClinic(clinicData);
-
-      // 2. Today's date range
-      const now = new Date();
-      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
-      const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).toISOString();
-
-      // 3. Today's appointments
-      const { data: todayAppts } = await supabase
-        .from('appointments')
-        .select('id, datetime, status, no_show_risk, reminder_sent, patients:patient_id (id, name, phone)')
-        .eq('clinic_id', clinicData.id)
-        .gte('datetime', todayStart)
-        .lte('datetime', todayEnd)
-        .order('datetime');
-
-      const appts = todayAppts || [];
-      setTodayAppointments(appts);
-      setTodayCount(appts.length);
-      setHighRiskToday(appts.filter((a) => a.no_show_risk === 'high').length);
-
-      // 4. Total patients count
-      const { count: patientCount } = await supabase
-        .from('patients')
-        .select('id', { count: 'exact', head: true })
-        .eq('clinic_id', clinicData.id);
-
-      setActivePatients(patientCount || 0);
-
-      // 5. All appointments for confirmation rate
-      const { data: allAppts } = await supabase
-        .from('appointments')
-        .select('id, status')
-        .eq('clinic_id', clinicData.id);
-
-      const all = allAppts || [];
-      if (all.length > 0) {
-        const confirmed = all.filter((a) => a.status === 'confirmed' || a.status === 'completed').length;
-        setConfirmRate(Math.round((confirmed / all.length) * 100));
-      } else {
-        setConfirmRate(0);
-      }
-
-      setLoading(false);
     }
 
     fetchData();
