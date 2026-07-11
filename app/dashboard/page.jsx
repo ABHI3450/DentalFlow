@@ -17,6 +17,20 @@ export default function DashboardPage() {
   const [highRiskToday, setHighRiskToday] = useState(0);
   const [activePatients, setActivePatients] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [timeStr, setTimeStr] = useState('');
+  const [dateStr, setDateStr] = useState('');
+
+  // Live clock updating every second
+  useEffect(() => {
+    function updateClock() {
+      const now = new Date();
+      setTimeStr(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      setDateStr(now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }));
+    }
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -141,7 +155,7 @@ export default function DashboardPage() {
             {clinic?.name || 'DentalFlow Clinic'} 🦷
           </h1>
           <p className="text-gray-500 mt-1.5 text-sm">
-            {getGreeting()}, Dr. {user?.lastName || user?.firstName || ''} · You have <span className="font-semibold text-[#1C1C1E]">{todayCount}</span> appointment{todayCount !== 1 ? 's' : ''} scheduled today.
+            {getGreeting()}, Dr. {clinic?.doctor_name || 'Smith'} · {dateStr} · {timeStr} · You have <span className="font-semibold text-[#1C1C1E]">{todayCount}</span> appointment{todayCount !== 1 ? 's' : ''} scheduled today.
           </p>
         </div>
 

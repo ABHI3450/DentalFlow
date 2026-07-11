@@ -34,6 +34,7 @@ export default function SettingsPage() {
 
   const [clinicId, setClinicId] = useState(null);
   const [clinicName, setClinicName] = useState('');
+  const [doctorName, setDoctorName] = useState('');
   const [smsEnabled, setSmsEnabled] = useState(true);
   const [emailEnabled, setEmailEnabled] = useState(true);
   const [reminderHours, setReminderHours] = useState(24);
@@ -61,7 +62,7 @@ export default function SettingsPage() {
 
         const { data: clinic, error: clinicError } = await supabase
           .from('clinics')
-          .select('id, name')
+          .select('id, name, doctor_name')
           .eq('owner_email', email)
           .single();
 
@@ -72,6 +73,7 @@ export default function SettingsPage() {
 
         setClinicId(clinic.id);
         setClinicName(clinic.name || '');
+        setDoctorName(clinic.doctor_name || '');
 
         // Fetch settings (may not exist yet)
         const { data: settings } = await supabase
@@ -102,10 +104,14 @@ export default function SettingsPage() {
     setError('');
 
     try {
-      // Update clinic name
+      // Update clinic name & doctor name
       const { error: clinicError } = await supabase
         .from('clinics')
-        .update({ name: clinicName, updated_at: new Date().toISOString() })
+        .update({ 
+          name: clinicName, 
+          doctor_name: doctorName,
+          updated_at: new Date().toISOString() 
+        })
         .eq('id', clinicId);
 
       if (clinicError) throw clinicError;
@@ -145,7 +151,7 @@ export default function SettingsPage() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Settings</h1>
 
       {/* Clinic Info */}
-      <div className="border border-gray-200 rounded-2xl p-6 mb-4">
+      <div className="border border-gray-200 rounded-2xl p-6 mb-4 space-y-4">
         <h2 className="text-base font-semibold text-gray-900 mb-4">Clinic Information</h2>
         <div>
           <label htmlFor="clinic-name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -157,6 +163,19 @@ export default function SettingsPage() {
             value={clinicName}
             onChange={e => setClinicName(e.target.value)}
             placeholder="Enter clinic name"
+            className="w-full px-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          />
+        </div>
+        <div>
+          <label htmlFor="doctor-name" className="block text-sm font-medium text-gray-700 mb-1">
+            Doctor Name
+          </label>
+          <input
+            id="doctor-name"
+            type="text"
+            value={doctorName}
+            onChange={e => setDoctorName(e.target.value)}
+            placeholder="Enter doctor's name (e.g. Smith)"
             className="w-full px-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           />
         </div>
