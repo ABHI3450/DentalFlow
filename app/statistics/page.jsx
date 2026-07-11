@@ -26,7 +26,7 @@ export default function StatisticsPage() {
   useEffect(() => {
     if (!isLoaded) return;
     if (!user) {
-      router.push('/sign-in');
+      router.push('/signin');
       return;
     }
 

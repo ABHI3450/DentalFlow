@@ -46,7 +46,7 @@ export default function SettingsPage() {
   // Fetch clinic & settings
   useEffect(() => {
     if (!isLoaded) return;
-    if (!user) { router.push('/sign-in'); return; }
+    if (!user) { router.push('/signin'); return; }
 
     async function fetchData() {
       const email = user.primaryEmailAddress?.emailAddress;

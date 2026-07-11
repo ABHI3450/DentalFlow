@@ -49,7 +49,7 @@ export default function ChatsPage() {
   // Fetch clinic
   useEffect(() => {
     if (!isLoaded) return;
-    if (!user) { router.push('/sign-in'); return; }
+    if (!user) { router.push('/signin'); return; }
 
     async function fetchClinic() {
       const email = user.primaryEmailAddress?.emailAddress;
