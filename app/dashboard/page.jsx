@@ -137,11 +137,11 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto p-8 text-[#1C1C1E]">
         {/* Greeting */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">
-            {getGreeting()}, Dr. {user?.lastName || user?.firstName || ''} 👋
+          <h1 className="text-3xl font-bold text-[#1C1C1E]">
+            {clinic?.name || 'DentalFlow Clinic'} 🦷
           </h1>
-          <p className="text-gray-500 mt-1">
-            You have <span className="font-semibold text-[#1C1C1E]">{todayCount}</span> appointment{todayCount !== 1 ? 's' : ''} today.
+          <p className="text-gray-500 mt-1.5 text-sm">
+            {getGreeting()}, Dr. {user?.lastName || user?.firstName || ''} · You have <span className="font-semibold text-[#1C1C1E]">{todayCount}</span> appointment{todayCount !== 1 ? 's' : ''} scheduled today.
           </p>
         </div>
 
