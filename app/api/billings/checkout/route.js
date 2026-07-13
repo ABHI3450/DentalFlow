@@ -4,8 +4,8 @@ import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { getRazorpayInstance } from '@/lib/razorpay';
 
 const PLANS = {
-  growth: { amount: 8266, currency: 'INR' },
-  pro: { amount: 16616, currency: 'INR' }
+  growth: { amount: 99, currency: 'USD' },
+  pro: { amount: 199, currency: 'USD' }
 };
 
 export async function POST(req) {
