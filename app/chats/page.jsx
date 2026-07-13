@@ -48,8 +48,7 @@ export default function ChatsPage() {
 
   // Fetch clinic
   useEffect(() => {
-    if (!isLoaded) return;
-    if (!user) { router.push('/signin'); return; }
+    if (!isLoaded || !user) return;
 
     async function fetchClinic() {
       try {

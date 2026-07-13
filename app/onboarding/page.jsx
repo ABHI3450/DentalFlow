@@ -14,11 +14,7 @@ export default function OnboardingPage() {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    if (!isLoaded) return;
-    if (!user) {
-      router.push('/signin');
-      return;
-    }
+    if (!isLoaded || !user) return;
     const email = user.primaryEmailAddress?.emailAddress;
     if (!email) {
       setChecking(false);

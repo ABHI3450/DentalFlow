@@ -24,11 +24,7 @@ export default function StatisticsPage() {
   const [topNoShowPatients, setTopNoShowPatients] = useState([]);
 
   useEffect(() => {
-    if (!isLoaded) return;
-    if (!user) {
-      router.push('/signin');
-      return;
-    }
+    if (!isLoaded || !user) return;
 
     const email = user.primaryEmailAddress?.emailAddress;
     if (!email) {
