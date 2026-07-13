@@ -4,16 +4,7 @@ export default function SignUpPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="w-full max-w-md">
-        <SignUp 
-          forceRedirectUrl="/dashboard"
-          appearance={{
-            elements: {
-              phoneNumberField: {
-                display: 'none'
-              }
-            }
-          }}
-        />
+        <SignUp path="/signup" forceRedirectUrl="/dashboard" />
       </div>
     </div>
   );
