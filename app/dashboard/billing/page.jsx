@@ -58,6 +58,8 @@ export default function BillingPage() {
     const fetchClinic = async () => {
       try {
         const email = user.primaryEmailAddress?.emailAddress;
+        if (!email) return;
+
         const { data, error: clinicError } = await supabase
           .from('clinics')
           .select('id, plan')
