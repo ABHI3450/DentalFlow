@@ -11,6 +11,8 @@ export default function LayoutWrapper({ children }) {
     pathname === '/' ||
     pathname.startsWith('/signin') ||
     pathname.startsWith('/signup') ||
+    pathname.startsWith('/sign-in') ||
+    pathname.startsWith('/sign-up') ||
     pathname.startsWith('/terms') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/refunds') ||
