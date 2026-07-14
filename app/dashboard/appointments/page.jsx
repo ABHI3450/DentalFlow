@@ -42,6 +42,7 @@ export default function AppointmentsPage() {
   const [showModal, setShowModal] = useState(false);
   const [editingApt, setEditingApt] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [sendingId, setSendingId] = useState(null);
 
   useEffect(() => {
     if (!isLoaded || !user) return;
@@ -86,6 +87,38 @@ export default function AppointmentsPage() {
     if (!confirm('Delete this appointment?')) return;
     await supabase.from('appointments').delete().eq('id', id);
     setAppointments(appointments.filter(a => a.id !== id));
+  }
+
+  async function handleSendReminder(apt) {
+    setSendingId(apt.id);
+    try {
+      const res = await fetch('/api/reminders/send-single', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          appointmentId: apt.id,
+          patientName: apt.patients?.name,
+          patientPhone: apt.patients?.phone,
+          patientEmail: apt.patients?.email,
+          clinicName: clinic?.name || 'DentalFlow Clinic',
+          datetime: apt.datetime
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send reminder');
+
+      alert('Reminder sent successfully!');
+      // Update local state
+      setAppointments(prev =>
+        prev.map(a => (a.id === apt.id ? { ...a, reminder_sent: true } : a))
+      );
+    } catch (err) {
+      console.error(err);
+      alert('Error sending reminder: ' + err.message);
+    } finally {
+      setSendingId(null);
+    }
   }
 
   if (loading || !clinic) {
@@ -191,9 +224,20 @@ export default function AppointmentsPage() {
                         <RiskBadge risk={apt.no_show_risk} />
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`text-xs font-medium ${apt.reminder_sent ? 'text-green-600' : 'text-gray-400'}`}>
-                          {apt.reminder_sent ? '✓ Sent' : '— Pending'}
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <span className={`text-xs font-medium ${apt.reminder_sent ? 'text-green-600' : 'text-gray-400'}`}>
+                            {apt.reminder_sent ? '✓ Sent' : '— Pending'}
+                          </span>
+                          {!apt.reminder_sent && (
+                            <button
+                              onClick={() => handleSendReminder(apt)}
+                              disabled={sendingId === apt.id}
+                              className="text-[10px] font-semibold bg-[#1C1C1E] text-white hover:bg-black px-2.5 py-1 rounded-lg transition disabled:opacity-50 shrink-0"
+                            >
+                              {sendingId === apt.id ? 'Sending...' : 'Send Now'}
+                            </button>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-end gap-2">
