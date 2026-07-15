@@ -34,10 +34,10 @@ export default function Sidebar() {
       style={{ backgroundColor: '#FAF9F6' }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-2 px-2 mb-8">
+      <Link href="/" className="flex items-center gap-2 px-2 mb-8 hover:opacity-85 transition cursor-pointer">
         <span className="w-2.5 h-2.5 rounded-full bg-[#1C1C1E]"></span>
         <span className="text-[#1C1C1E] font-bold text-lg italic">DentalFlow</span>
-      </div>
+      </Link>
 
       {/* General */}
       <p className="text-[10px] text-gray-400 font-semibold tracking-wider px-3 mb-2">
