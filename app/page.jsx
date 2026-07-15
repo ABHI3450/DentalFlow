@@ -216,10 +216,12 @@ export default function LandingPage() {
       <section className="max-w-6xl mx-auto px-6 py-24 border-t border-gray-200/60">
         <div className="max-w-4xl mx-auto bg-white rounded-3xl p-8 md:p-12 border border-gray-250 shadow-md relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
           <div className="absolute right-0 bottom-0 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-60"></div>
-          {/* Avatar Initials Placeholder */}
-          <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-[#1C1C1E] text-white flex items-center justify-center text-3xl font-extrabold shadow-md shrink-0 select-none">
-            AC
-          </div>
+          {/* Avatar Image */}
+          <img 
+            src="/abhishek.jpg" 
+            alt="Abhishek Chandra SDE" 
+            className="w-28 h-28 md:w-32 md:h-32 rounded-3xl object-cover shadow-md shrink-0 border border-gray-150"
+          />
           <div className="flex-1 text-center md:text-left">
             <span className="text-xs font-bold text-indigo-600 tracking-wider uppercase">Meet the Developer</span>
             <h3 className="text-2xl font-black text-gray-900 mt-1">Abhishek Chandra</h3>
