@@ -35,13 +35,19 @@ export default function VirtualDentistWidget() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question, history }),
       });
+
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned an invalid response (timeout/offline).');
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
         setMode('error');
         setMessages((prev) => [
           ...prev,
-          { role: 'ai', text: data.error || 'Unable to reach the AI service. Please try again.' },
+          { role: 'ai', text: data.answer || data.error || 'Unable to reach the AI service. Please try again.' },
         ]);
         return;
       }
@@ -51,11 +57,11 @@ export default function VirtualDentistWidget() {
         ...prev,
         { role: 'ai', text: data.answer || "I couldn't generate a response. Please try again." },
       ]);
-    } catch {
+    } catch (err) {
       setMode('error');
       setMessages((prev) => [
         ...prev,
-        { role: 'ai', text: "I couldn't reach the server just now. Please try again in a moment." },
+        { role: 'ai', text: err.message || "I couldn't reach the server just now. Please try again in a moment." },
       ]);
     } finally {
       setLoading(false);
