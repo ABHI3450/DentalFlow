@@ -48,11 +48,11 @@ export default function ChatsPage() {
 
   // Fetch clinic
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
 
     async function fetchClinic() {
       try {
-        const email = user.primaryEmailAddress?.emailAddress;
+        const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
         if (!email) { 
           router.push('/onboarding'); 
           setLoading(false);

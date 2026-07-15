@@ -46,14 +46,9 @@ export default function SettingsPage() {
 
   // Fetch clinic & settings
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
 
-    const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) {
-      router.push('/onboarding');
-      setLoading(false);
-      return;
-    }
+    const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
 
     async function fetchData() {
       try {

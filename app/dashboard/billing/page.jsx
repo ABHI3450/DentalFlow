@@ -53,11 +53,11 @@ export default function BillingPage() {
   }, []);
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
 
     const fetchClinic = async () => {
       try {
-        const email = user.primaryEmailAddress?.emailAddress;
+        const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
         if (!email) return;
 
         const { data, error: clinicError } = await supabase

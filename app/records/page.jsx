@@ -22,13 +22,13 @@ export default function RecordsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
     fetchData();
   }, [isLoaded, user]);
 
   async function fetchData() {
     try {
-      const email = user.primaryEmailAddress?.emailAddress;
+      const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
       const { data: clinicData } = await supabase
         .from('clinics').select('*').eq('owner_email', email).single();
 

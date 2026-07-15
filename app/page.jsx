@@ -32,16 +32,10 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link 
-              href="/signin" 
-              className="text-sm font-semibold hover:text-gray-600 transition"
+              href="/dashboard" 
+              className="bg-[#1C1C1E] hover:bg-gray-800 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
             >
-              Sign in
-            </Link>
-            <Link 
-              href="/signup" 
-              className="bg-[#1C1C1E] hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-sm"
-            >
-              Get Started
+              Enter App
             </Link>
           </div>
         </div>
@@ -60,16 +54,10 @@ export default function LandingPage() {
         </p>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
-            href="/signup" 
-            className="w-full sm:w-auto bg-[#1C1C1E] hover:bg-gray-800 text-white font-medium px-8 py-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 group"
+            href="/dashboard" 
+            className="w-full sm:w-auto bg-[#1C1C1E] hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 group text-sm"
           >
-            Start Free Trial <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link 
-            href="/signin" 
-            className="w-full sm:w-auto bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-8 py-4 rounded-2xl transition flex items-center justify-center"
-          >
-            Book a Demo
+            Explore Demo Dashboard <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>

@@ -33,13 +33,9 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
+    if (!isLoaded) return;
 
-    const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) {
-      setLoading(false);
-      return;
-    }
+    const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
 
     async function fetchData() {
       try {
