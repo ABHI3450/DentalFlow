@@ -14,12 +14,8 @@ export default function OnboardingPage() {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    if (!isLoaded || !user) return;
-    const email = user.primaryEmailAddress?.emailAddress;
-    if (!email) {
-      setChecking(false);
-      return;
-    }
+    if (!isLoaded) return;
+    const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
 
     (async () => {
       try {
@@ -31,7 +27,26 @@ export default function OnboardingPage() {
         if (data) {
           router.push('/dashboard');
         } else {
-          setChecking(false);
+          // If in demo mode and clinic doesn't exist, create it automatically!
+          if (email === 'demo@dentalflow.com') {
+            await supabase.from('clinics').insert({
+              id: 'd3b07384-d113-43a0-b5a0-53bc47285641',
+              name: 'Smile Dental Clinic',
+              owner_email: 'demo@dentalflow.com',
+              doctor_name: 'Chandra',
+              plan: 'pro'
+            });
+            // Also create settings
+            await supabase.from('settings').insert({
+              clinic_id: 'd3b07384-d113-43a0-b5a0-53bc47285641',
+              sms_enabled: true,
+              email_enabled: true,
+              reminder_hours_before: 24
+            });
+            router.push('/dashboard');
+          } else {
+            setChecking(false);
+          }
         }
       } catch (err) {
         console.error('Onboarding check error:', err);
@@ -44,7 +59,7 @@ export default function OnboardingPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const email = user.primaryEmailAddress?.emailAddress;
+      const email = user?.primaryEmailAddress?.emailAddress || 'demo@dentalflow.com';
       const { error } = await supabase.from('clinics').insert({
         name,
         owner_email: email,
