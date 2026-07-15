@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { 
   Calendar, ShieldCheck, MessageCircle, BarChart3, 
-  ArrowRight, Sparkles, Clock, CheckCircle2 
+  ArrowRight, Sparkles, Clock, CheckCircle2, 
+  Linkedin, Github, Users, Award, Zap, Globe, Cpu
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -38,7 +39,7 @@ export default function LandingPage() {
             </Link>
             <Link 
               href="/signup" 
-              className="bg-[#1C1C1E] hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm"
+              className="bg-[#1C1C1E] hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-sm"
             >
               Get Started
             </Link>
@@ -47,161 +48,203 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 rounded-full px-4 py-1.5 text-xs text-indigo-700 font-semibold mb-6 animate-fade-in">
-          <Sparkles size={12} /> Smart Appointment Reminder & AI Prediction
+      <section className="max-w-6xl mx-auto px-6 py-24 text-center">
+        <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 rounded-full px-4 py-1.5 text-xs text-indigo-700 font-semibold mb-6 animate-pulse">
+          <Sparkles size={12} /> B2B Clinic Workflow Automation & AI Reminders
         </div>
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight max-w-4xl mx-auto">
-          Reduce Dental Clinic <span className="underline decoration-indigo-500 decoration-wavy">No-Shows</span> by 85%
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 leading-tight max-w-4xl mx-auto">
+          Scale Your Dental Practice with <span className="underline decoration-indigo-500 decoration-wavy">DentalFlow</span>
         </h1>
-        <p className="mt-6 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-          Smart automated SMS & email reminders, live patient chats, AI-powered no-show risk scoring, and a virtual dental assistant to keep your clinic filled and efficient.
+        <p className="mt-6 text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          The ultimate intelligent dashboard for modern dental clinics. Reduce no-shows, automate patient reminders, and manage daily clinical operations with a single, beautiful hub.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
             href="/signup" 
-            className="w-full sm:w-auto bg-[#1C1C1E] hover:bg-gray-800 text-white font-medium px-8 py-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2 group"
+            className="w-full sm:w-auto bg-[#1C1C1E] hover:bg-gray-800 text-white font-medium px-8 py-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 group"
           >
             Start Free Trial <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
             href="/signin" 
-            className="w-full sm:w-auto bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-8 py-3.5 rounded-xl transition flex items-center justify-center"
+            className="w-full sm:w-auto bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-8 py-4 rounded-2xl transition flex items-center justify-center"
           >
-            Schedule a Demo
+            Book a Demo
           </Link>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="max-w-7xl mx-auto px-6 py-16 border-t border-gray-200/60">
-        <h2 className="text-center text-sm font-bold tracking-wider text-gray-400 uppercase mb-12">
-          Designed specifically for dental practices
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm hover:shadow-md transition">
-            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
-              <Clock size={20} />
+      {/* Core Concept: What We Do */}
+      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-gray-200/60">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="text-xs font-bold text-indigo-600 tracking-widest uppercase">What We Do</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mt-2 leading-tight">
+              Optimizing Daily Dental Workflows With Modern Intelligence
+            </h2>
+            <p className="mt-4 text-gray-500 leading-relaxed text-sm md:text-base">
+              DentalFlow is a B2B SaaS platform specifically crafted for dental clinics. We solve the administrative inefficiencies that slow down healthcare practices. By integrating electronic health records (EHR), file cabinets, automated messaging, and dynamic scheduling, we provide doctors with a unified workspace to focus on what matters most: patient care.
+            </p>
+            <div className="mt-6 space-y-3">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={16} />
+                <span className="text-xs md:text-sm text-gray-600 font-medium">Unified patient profile displaying past no-show statistics and records</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={16} />
+                <span className="text-xs md:text-sm text-gray-600 font-medium">Auto-pilot communications through SMS and Email gateways</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="text-emerald-500 mt-0.5 shrink-0" size={16} />
+                <span className="text-xs md:text-sm text-gray-600 font-medium">Robust and secure multi-location clinical dashboard panels</span>
+              </div>
             </div>
-            <h3 className="font-bold text-[#1C1C1E] mb-2">Automated Reminders</h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Send SMS and email confirmations 12, 24, or 48 hours before appointments. Zero manual effort required.
+          </div>
+          <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-md relative overflow-hidden group hover:shadow-lg transition">
+            <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-50/50 rounded-full blur-2xl group-hover:bg-indigo-100/50 transition"></div>
+            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+              <Zap size={18} className="text-indigo-600" /> Clinic Impact
+            </h3>
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-50 rounded-2xl">
+                <span className="text-2xl font-black text-gray-900">85%</span>
+                <p className="text-xs text-gray-400 mt-1 uppercase font-semibold tracking-wider">Average No-Show Reduction</p>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-2xl">
+                <span className="text-2xl font-black text-gray-900">12+ Hours</span>
+                <p className="text-xs text-gray-400 mt-1 uppercase font-semibold tracking-wider">Weekly Staff Time Saved</p>
+              </div>
+              <div className="p-4 bg-gray-50 rounded-2xl">
+                <span className="text-2xl font-black text-gray-900">₹1,40,000+</span>
+                <p className="text-xs text-gray-400 mt-1 uppercase font-semibold tracking-wider">Average Monthly Revenue Recovered</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real World Impact */}
+      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-gray-200/60">
+        <div className="text-center mb-16">
+          <span className="text-xs font-bold text-indigo-600 tracking-widest uppercase">Real World Value</span>
+          <h2 className="text-3xl font-extrabold text-gray-950 mt-2">Solving True Clinical Bottlenecks</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:-translate-y-1 transition duration-300">
+            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
+              <Clock size={24} />
+            </div>
+            <h3 className="font-bold text-lg text-gray-900 mb-2">Automated Outreach</h3>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Manual calling is outdated. DentalFlow automatically dispatches text and email alerts before appointments, securing confirmations passively.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm hover:shadow-md transition">
-            <div className="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-4">
-              <ShieldCheck size={20} />
+          <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:-translate-y-1 transition duration-300">
+            <div className="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-6">
+              <Cpu size={24} />
             </div>
-            <h3 className="font-bold text-[#1C1C1E] mb-2">AI Risk Prediction</h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Flag appointments at high risk of no-show before they happen based on patient history and scheduling habits.
+            <h3 className="font-bold text-lg text-gray-900 mb-2">AI Chair Protection</h3>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Every empty dentist chair incurs cost. Our AI model evaluates user history and flags no-show hazards, giving your front desk time to reschedule.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm hover:shadow-md transition">
-            <div className="w-10 h-10 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center mb-4">
-              <MessageCircle size={20} />
+          <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:-translate-y-1 transition duration-300">
+            <div className="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center mb-6">
+              <Globe size={24} />
             </div>
-            <h3 className="font-bold text-[#1C1C1E] mb-2">Instant Patient Chat</h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Direct two-way SMS communication thread right inside the dashboard to handle quick reschedules.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm hover:shadow-md transition">
-            <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
-              <BarChart3 size={20} />
-            </div>
-            <h3 className="font-bold text-[#1C1C1E] mb-2">Practice Reports</h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Get real-time insights on your appointment confirmation rates, total no-shows, and revenue statistics.
+            <h3 className="font-bold text-lg text-gray-900 mb-2">Omnipresent Care</h3>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Provide patients with seamless access to virtual assistants, secure documents folders, prescription histories, and instant chat channels.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section (Mandatory for Payment Gateways) */}
-      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-gray-200/60">
+      {/* B2B Capabilities */}
+      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-gray-200/60 bg-white/40 rounded-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900">Simple, Transparent Pricing</h2>
-          <p className="text-gray-500 mt-2 text-sm">Choose the plan that fits your clinic size. No hidden fees.</p>
+          <span className="text-xs font-bold text-indigo-600 tracking-widest uppercase">Business Level B2B Suite</span>
+          <h2 className="text-3xl font-extrabold text-gray-950 mt-2">Why DentalFlow Wins at the B2B Level</h2>
+          <p className="text-sm text-gray-500 mt-2">Built to scale from single chairs to multi-location healthcare franchises.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Starter */}
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col justify-between">
-            <div>
-              <h3 className="text-lg font-bold text-gray-900">Starter</h3>
-              <p className="text-xs text-gray-400 mt-1">For single practitioner clinics</p>
-              <div className="my-6">
-                <span className="text-4xl font-extrabold text-gray-900">$0</span>
-                <span className="text-sm text-gray-500"> / month</span>
-              </div>
-              <ul className="space-y-3 text-xs text-gray-600">
-                <li className="flex items-center gap-2">✓ 100 appointments/month</li>
-                <li className="flex items-center gap-2">✓ Basic email reminders</li>
-                <li className="flex items-center gap-2">✓ Patient list manager</li>
-              </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="flex gap-4 p-6 bg-white border border-gray-250/50 rounded-2xl">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
+              <Users size={20} />
             </div>
-            <Link 
-              href="/signup" 
-              className="mt-8 block text-center bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-semibold py-3 rounded-xl transition"
-            >
-              Get Started
-            </Link>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm md:text-base">Robust Clinic CRM</h4>
+              <p className="text-xs md:text-sm text-gray-500 mt-1 leading-relaxed">Track comprehensive patient profiles, contact lists, prescription details, and visual lab reports dynamically linked across pages.</p>
+            </div>
           </div>
 
-          {/* Growth */}
-          <div className="bg-white rounded-2xl border-2 border-indigo-600 p-8 shadow-md relative flex flex-col justify-between">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase">
-              Popular
-            </span>
-            <div>
-              <h3 className="text-lg font-bold text-gray-900">Growth</h3>
-              <p className="text-xs text-gray-400 mt-1">Perfect for growing practices</p>
-              <div className="my-6">
-                <span className="text-4xl font-extrabold text-gray-900">$99</span>
-                <span className="text-sm text-gray-500"> / month</span>
-                <p className="text-[10px] text-indigo-600 font-semibold mt-1">Approx. ₹8,266 / month</p>
-              </div>
-              <ul className="space-y-3 text-xs text-gray-600">
-                <li className="flex items-center gap-2">✓ 500 appointments/month</li>
-                <li className="flex items-center gap-2">✓ Automated SMS & Email reminders</li>
-                <li className="flex items-center gap-2">✓ AI No-Show Risk scoring</li>
-                <li className="flex items-center gap-2">✓ Two-way patient chat thread</li>
-              </ul>
+          <div className="flex gap-4 p-6 bg-white border border-gray-250/50 rounded-2xl">
+            <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600 shrink-0">
+              <BarChart3 size={20} />
             </div>
-            <Link 
-              href="/signup" 
-              className="mt-8 block text-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-3 rounded-xl transition shadow-sm"
-            >
-              Start Free Trial
-            </Link>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm md:text-base">Real-time Stats Analytics</h4>
+              <p className="text-xs md:text-sm text-gray-500 mt-1 leading-relaxed">Deep metrics on practice confirmation rates, no-show trends, monthly growth, and patient retention analytics.</p>
+            </div>
           </div>
 
-          {/* Pro */}
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col justify-between">
-            <div>
-              <h3 className="text-lg font-bold text-gray-900">Pro</h3>
-              <p className="text-xs text-gray-400 mt-1">For multi-location clinic networks</p>
-              <div className="my-6">
-                <span className="text-4xl font-extrabold text-gray-900">$199</span>
-                <span className="text-sm text-gray-500"> / month</span>
-                <p className="text-[10px] text-gray-400 mt-1">Approx. ₹16,616 / month</p>
-              </div>
-              <ul className="space-y-3 text-xs text-gray-600">
-                <li className="flex items-center gap-2">✓ 2,000 appointments/month</li>
-                <li className="flex items-center gap-2">✓ Advanced analytics dashboard</li>
-                <li className="flex items-center gap-2">✓ Custom brand text messages</li>
-                <li className="flex items-center gap-2">✓ Dedicated account manager</li>
-              </ul>
+          <div className="flex gap-4 p-6 bg-white border border-gray-250/50 rounded-2xl">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+              <MessageCircle size={20} />
             </div>
-            <Link 
-              href="/signup" 
-              className="mt-8 block text-center bg-[#1C1C1E] hover:bg-gray-800 text-white text-xs font-semibold py-3 rounded-xl transition"
-            >
-              Contact Sales
-            </Link>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm md:text-base">Interconnected Chat Suite</h4>
+              <p className="text-xs md:text-sm text-gray-500 mt-1 leading-relaxed">Engage patients in real-time. Handshake communications allow front desks to resolve reschedules within seconds.</p>
+            </div>
+          </div>
+
+          <div className="flex gap-4 p-6 bg-white border border-gray-250/50 rounded-2xl">
+            <div className="w-10 h-10 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
+              <ShieldCheck size={20} />
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm md:text-base">Compliance & EHR Integration</h4>
+              <p className="text-xs md:text-sm text-gray-500 mt-1 leading-relaxed">Security at every step. Built to store digital consent forms, prescriptions, invoices, and diagnostic summaries safely.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Developer Section */}
+      <section className="max-w-6xl mx-auto px-6 py-24 border-t border-gray-200/60">
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl p-8 md:p-12 border border-gray-250 shadow-md relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
+          <div className="absolute right-0 bottom-0 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-60"></div>
+          {/* Avatar Initials Placeholder */}
+          <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-[#1C1C1E] text-white flex items-center justify-center text-3xl font-extrabold shadow-md shrink-0 select-none">
+            AC
+          </div>
+          <div className="flex-1 text-center md:text-left">
+            <span className="text-xs font-bold text-indigo-600 tracking-wider uppercase">Meet the Developer</span>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">Abhishek Chandra</h3>
+            <p className="text-xs text-gray-500 font-semibold mt-0.5">Software Development Engineer (SDE)</p>
+            <p className="text-xs md:text-sm text-gray-600 leading-relaxed mt-3.5">
+              Hi, I'm Abhishek, the architect behind DentalFlow. I design secure B2B software solutions that bridge the gap between complex database systems and beautiful user-friendly interfaces. Feel free to connect with me and explore my other projects!
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
+              <a 
+                href="https://www.linkedin.com/in/abhishekchandra-sde" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2"
+              >
+                <Linkedin size={14} /> LinkedIn
+              </a>
+              <a 
+                href="https://www.github.com/ABHI3450" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#1C1C1E] hover:bg-black text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2"
+              >
+                <Github size={14} /> GitHub
+              </a>
+            </div>
           </div>
         </div>
       </section>
