@@ -6,7 +6,7 @@ import {
   LayoutGrid, Calendar, Users, BarChart2, Stethoscope,
   FileText, MessageCircle, CreditCard, FolderOpen, Settings, LogOut
 } from 'lucide-react';
-import { useClerk } from '@clerk/nextjs';
+import { useClerk, useUser } from '@clerk/nextjs';
 
 const generalItems = [
   { href: '/dashboard', icon: LayoutGrid, label: 'Dashboard' },
@@ -27,6 +27,7 @@ const toolItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { signOut } = useClerk();
+  const { isSignedIn } = useUser();
 
   return (
     <aside
@@ -88,13 +89,15 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout */}
-      <button
-        onClick={() => signOut({ redirectUrl: '/signin' })}
-        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-200/60 transition mt-4"
-      >
-        <LogOut size={16} />
-        Log out
-      </button>
+      {isSignedIn && (
+        <button
+          onClick={() => signOut({ redirectUrl: '/signin' })}
+          className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-200/60 transition mt-4"
+        >
+          <LogOut size={16} />
+          Log out
+        </button>
+      )}
     </aside>
   );
 }

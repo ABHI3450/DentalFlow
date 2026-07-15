@@ -31,36 +31,36 @@ on conflict (clinic_id) do update set
 -- 3. Insert Demo Patients
 insert into public.patients (id, clinic_id, name, phone, email, past_no_shows)
 values 
-  ('p001-doe', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'John Doe', '+1 (555) 123-4567', 'john.doe@email.com', 0),
-  ('p002-connor', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'Sarah Connor', '+1 (555) 987-6543', 'sarah.connor@email.com', 1),
-  ('p003-vance', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'Robert Vance', '+1 (555) 444-2222', 'robert.vance@email.com', 4)
+  ('9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'John Doe', '+1 (555) 123-4567', 'john.doe@email.com', 0),
+  ('4c3a2f1b-5e4d-4c3b-2a1d-0e9f8a7b6c5d', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'Sarah Connor', '+1 (555) 987-6543', 'sarah.connor@email.com', 1),
+  ('7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d', 'd3b07384-d113-43a0-b5a0-53bc47285641', 'Robert Vance', '+1 (555) 444-2222', 'robert.vance@email.com', 4)
 on conflict (id) do nothing;
 
 -- 4. Insert Demo Appointments (Adjust dates to today and tomorrow)
 insert into public.appointments (id, clinic_id, patient_id, datetime, status, no_show_risk, reminder_sent)
 values
   (
-    'apt-001',
+    'e1a2b3c4-d5e6-4a5b-6c7d-8e9f0a1b2c3d',
     'd3b07384-d113-43a0-b5a0-53bc47285641',
-    'p001-doe',
+    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
     (current_date + interval '14 hours')::timestamp,
     'scheduled',
     'low',
     false
   ),
   (
-    'apt-002',
+    'f2a3b4c5-d6e7-4a5b-6c7d-8e9f0a1b2c3d',
     'd3b07384-d113-43a0-b5a0-53bc47285641',
-    'p002-connor',
+    '4c3a2f1b-5e4d-4c3b-2a1d-0e9f8a7b6c5d',
     (current_date + interval '1 day 10 hours')::timestamp,
     'confirmed',
     'low',
     true
   ),
   (
-    'apt-003',
+    'a3b4c5d6-e7f8-4a5b-6c7d-8e9f0a1b2c3d',
     'd3b07384-d113-43a0-b5a0-53bc47285641',
-    'p003-vance',
+    '7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d',
     (current_date + interval '16 hours 30 minutes')::timestamp,
     'scheduled',
     'high',
@@ -72,18 +72,18 @@ on conflict (id) do nothing;
 insert into public.records (id, clinic_id, patient_id, type, title, notes, created_at)
 values
   (
-    'rec-001',
+    'b1c2d3e4-f5a6-4b5c-6d7e-8f9a0b1c2d3e',
     'd3b07384-d113-43a0-b5a0-53bc47285641',
-    'p001-doe',
+    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
     'Prescription',
     'Painkiller & Antibiotic Protocol',
     'Amoxicillin 500mg - 3x daily for 7 days. Ibuprofen 600mg as needed for postoperative pain.',
     now()
   ),
   (
-    'rec-002',
+    'c2d3e4f5-a6b7-4b5c-6d7e-8f9a0b1c2d3e',
     'd3b07384-d113-43a0-b5a0-53bc47285641',
-    'p002-connor',
+    '4c3a2f1b-5e4d-4c3b-2a1d-0e9f8a7b6c5d',
     'X-Ray',
     'Panoramic Dental X-Ray Log',
     'Extensive molar wear on lower left quad. Wisdom tooth extraction recommended for quad 3.',
