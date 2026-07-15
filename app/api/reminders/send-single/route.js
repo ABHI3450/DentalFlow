@@ -5,11 +5,23 @@ import { generateReminderMessage } from '@/lib/gemini';
 import { supabase } from '@/lib/supabase';
 
 export async function POST(req) {
-  const { userId } = await auth();
-  if (!userId) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
   try {
-    const { appointmentId, patientName, patientPhone, patientEmail, clinicName, datetime } = await req.json();
+    const body = await req.json();
+    const { appointmentId, patientName, patientPhone, patientEmail, clinicName, datetime } = body;
+    const { userId } = await auth();
+
+    if (!userId) {
+      // Allow sending reminders only for the public demo clinic
+      const { data: apt } = await supabase
+        .from('appointments')
+        .select('clinic_id')
+        .eq('id', appointmentId)
+        .single();
+
+      if (!apt || apt.clinic_id !== 'd3b07384-d113-43a0-b5a0-53bc47285641') {
+        return Response.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+    }
 
     // Generate AI reminder message
     const message = await generateReminderMessage(clinicName, patientName, datetime);
